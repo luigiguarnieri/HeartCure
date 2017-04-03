@@ -133,15 +133,14 @@
                     android:text="@string/question3" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup3"
                     style="@style/radioGroup">
 
-                    <RadioButton
+                    <CheckBox
                         android:id="@+id/radioButton3_1"
                         style="@style/radioButton"
                         android:text="@string/female" />
 
-                    <RadioButton
+                    <CheckBox
                         android:id="@+id/radioButton3_2"
                         style="@style/radioButton"
                         android:text="@string/male" />
@@ -440,7 +439,8 @@
                     <RadioButton
                         android:id="@+id/radioButton9_1"
                         style="@style/radioButton"
-                        android:text="@string/answer9a" />
+                        android:text="@string/answer9a"
+                        tools:ignore="TooManyViews" />
 
                     <RadioButton
                         android:id="@+id/radioButton9_2"
@@ -652,6 +652,7 @@
             style="@style/button"
             android:text="@string/reset_button"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:onClick="resetClickHandler"/>
 
         <Button
@@ -659,6 +660,7 @@
             style="@style/button"
             android:text="@string/show_results"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:onClick="showResults"/>
 
         </RelativeLayout>

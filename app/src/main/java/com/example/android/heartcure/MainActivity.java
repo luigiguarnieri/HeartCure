@@ -1,6 +1,7 @@
 package com.example.android.heartcure;
 
 import android.support.v7.app.AppCompatActivity;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.support.v7.app.ActionBar;
 import android.graphics.Color;
@@ -22,11 +23,12 @@ import android.widget.Toast;
 import static android.R.attr.button;
 import static android.R.attr.flipInterval;
 import static android.R.attr.radioButtonStyle;
+import static android.R.attr.state_empty;
+import static android.R.attr.state_selected;
 import static android.R.id.message;
 import static android.os.Build.VERSION_CODES.M;
 import static com.example.android.heartcure.R.id.radioGroup1;
 import static com.example.android.heartcure.R.id.radioGroup2;
-import static com.example.android.heartcure.R.id.radioGroup3;
 import static com.example.android.heartcure.R.string.answer3c;
 import static com.example.android.heartcure.R.string.bmi;
 import static com.example.android.heartcure.R.style.Widget_AppCompat_CompoundButton_RadioButton;
@@ -38,21 +40,12 @@ public class MainActivity extends AppCompatActivity {
     int bmi; // bmi calculated into scoreThirdQuestion method and used in the final evaluation
     boolean clicked = false; //it becomes true if buttonResults and resetButton are pressed
 
-    RadioGroup radiogroup1;
-    RadioGroup radiogroup2;
-    RadioGroup radiogroup3;
-    RadioGroup radiogroup4;
-    RadioGroup radiogroup5;
-    RadioGroup radiogroup6;
-    RadioGroup radiogroup7;
-    RadioGroup radiogroup8;
-    RadioGroup radiogroup9;
-    RadioGroup radiogroup10;
-    RadioGroup radiogroup11;
-    RadioGroup radiogroup12;
-    RadioGroup radiogroup13;
-    EditText userweight;
-    EditText userheight;
+    RadioGroup radiogroup1, radiogroup2, radiogroup4, radiogroup5, radiogroup6, radiogroup7,
+            radiogroup8, radiogroup9, radiogroup10, radiogroup11, radiogroup12, radiogroup13;
+
+    EditText userweight, userheight;
+
+    CheckBox userfemale, usermale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         radiogroup1 = (RadioGroup) findViewById(radioGroup1);
         radiogroup2 = (RadioGroup) findViewById(radioGroup2);
-        radiogroup3 = (RadioGroup) findViewById(radioGroup3);
         radiogroup4 = (RadioGroup) findViewById(R.id.radioGroup4);
         radiogroup5 = (RadioGroup) findViewById(R.id.radioGroup5);
         radiogroup6 = (RadioGroup) findViewById(R.id.radioGroup6);
@@ -91,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         radiogroup13 = (RadioGroup) findViewById(R.id.radioGroup13);
         userweight = (EditText) findViewById(R.id.weight_data);
         userheight = (EditText) findViewById(R.id.height_data);
+        userfemale = (CheckBox) findViewById(R.id.radioButton3_1);
+        usermale = (CheckBox) findViewById(R.id.radioButton3_2);
 
         Button submit = (Button) findViewById(R.id.buttonResults);
 
@@ -151,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
     // This method calculates score for the third radiogroup and calculates bmi to show in the final evaluation
     private void scoreThirdQuestion() {
-        RadioButton answer3a = (RadioButton) findViewById(R.id.radioButton3_1);
-        RadioButton answer3b = (RadioButton) findViewById(R.id.radioButton3_2);
+        CheckBox answer3a = (CheckBox) findViewById(R.id.radioButton3_1);
+        CheckBox answer3b = (CheckBox) findViewById(R.id.radioButton3_2);
         EditText userWeight = (EditText) findViewById(R.id.weight_data);
         String weight = userWeight.getText().toString();
         int newWeight = Integer.parseInt(weight);
@@ -161,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         int newHeight = Integer.parseInt(height);
 
         bmi = ((newWeight * 10000) / (newHeight * newHeight));
-        Log.v("My Activity", "Your BMI is " + bmi);
 
         if (answer3a.isChecked() && bmi <= 24)
             score = score;
@@ -359,15 +352,24 @@ public class MainActivity extends AppCompatActivity {
         return score;
     }
 
-    // This method shows final evaluation only if user has selected all the radiogroups
-    // and edited the two fields with his weight and height.
-    // If this condition is not satisfied, an AlertDialog shows up an error.
+    // This method shows final evaluation only if user has selected all the radiogroups, one
+    // checkbox about his sex and edited the two fields with his weight and height.
+    // If both the checkboxes about sex are checked, an AlertDialog shows up an error,
+    // asking user to make only one choice between them.
+    // Same thing if user hasn't completed all the test: an AlertDialog shows up an error.
     // If the condition is satisfied, final evaluation is shown with an AlertDialog
     // with his bmi and a footnote.
     public void showResults(View view) {
-        if (radiogroup1.getCheckedRadioButtonId() == -1
+        if (userfemale.isChecked() && usermale.isChecked()) {
+            String message = getString(R.string.sex_mismatch);
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.title_sex_mismatch))
+                    .setMessage(message)
+                    .setPositiveButton("ok", null)
+                    .show();
+        } else if ((!userfemale.isChecked() && !usermale.isChecked())
+                || radiogroup1.getCheckedRadioButtonId() == -1
                 || radiogroup2.getCheckedRadioButtonId() == -1
-                || radiogroup3.getCheckedRadioButtonId() == -1
                 || radiogroup4.getCheckedRadioButtonId() == -1
                 || radiogroup5.getCheckedRadioButtonId() == -1
                 || radiogroup6.getCheckedRadioButtonId() == -1
@@ -391,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (score <= 4) {
                 String message = getString(R.string.evaluation1);
-                message += getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
@@ -402,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (score >= 5 && score <= 8) {
                 String message = getString(R.string.evaluation2);
-                message += getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
@@ -415,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
             if (score >= 9 && score <= 16) {
 
                 String message = getString(R.string.evaluation3);
-                message += getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
@@ -427,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (score >= 17) {
                 String message = getString(R.string.evaluation4);
-                message += getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
@@ -451,7 +453,6 @@ public class MainActivity extends AppCompatActivity {
     public void resetClickHandler(View v) {
         radiogroup1.clearCheck();
         radiogroup2.clearCheck();
-        radiogroup3.clearCheck();
         radiogroup4.clearCheck();
         radiogroup5.clearCheck();
         radiogroup6.clearCheck();
@@ -465,6 +466,8 @@ public class MainActivity extends AppCompatActivity {
         radiogroup13.clearCheck();
         userheight.getText().clear();
         userweight.getText().clear();
+        userfemale.setChecked(false);
+        usermale.setChecked(false);
 
         score = 0;
 

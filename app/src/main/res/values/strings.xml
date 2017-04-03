@@ -86,10 +86,12 @@
     <string name="reset_test">RIFAI IL TEST</string>
     <string name="title_complete_test">TEST INCOMPLETO</string>
     <string name="complete_test">Per favore rispondi prima a tutte le domande, grazie!</string>
+    <string name="sex_mismatch">La scelta del sesso per il calcolo del tuo BMI non è corretta. Scegli solo una delle due opzioni per favore, grazie!</string>
+    <string name="title_sex_mismatch">DATI ERRATI PER IL SESSO</string>
     <string name="female">donna</string>
     <string name="male">uomo</string>
     <string name="hint_weight">Inserisci il tuo peso in chilogrammi</string>
     <string name="hint_height">Inserisci la tua altezza in centimetri</string>
-    <string name="bmi">Il tuo BMI è "</string>
+    <string name="bmi">Il vostro BMI è "</string>
     <string name="reset_button">RIFAI IL TEST</string>
 </resources>
