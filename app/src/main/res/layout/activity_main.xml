@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/padding"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -147,23 +147,13 @@
 
                     <EditText
                         android:id="@+id/weight_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/hint_weight"
-                        android:inputType="number"
-                        android:gravity="center"
-                        android:maxLength="3"
-                        android:textSize="14sp"/>
+                        style="@style/editText"
+                        android:hint="@string/hint_weight" />
 
                     <EditText
                         android:id="@+id/height_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:hint="@string/hint_height"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:textSize="14sp"/>
+                        style="@style/editText"
+                        android:hint="@string/hint_height" />
                 </RadioGroup>
 
 
