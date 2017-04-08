@@ -49,7 +49,7 @@
     <string name="answer9d">Gyógyszert szedek, hogy csökkentsem a vércukor szintem</string>
     <string name="answer9e">Inzulin injekciót adok magamnak</string>
     <string name="appbar_subtitle">Kérdőív a szívinfarktus kockázatáról</string>
-    <string name="bmi">Az ön TTI-je:</string>
+    <string name="bmi">Az ön TTI-je: \u0020</string>
     <string name="complete_test">Minden kérdést válaszoljon meg, hogy személyre szabott értékelést kaphasson! Köszönöm.</string>
     <string name="evaluation1">Gratulálok! A szív- és érrendszeri megbetegedés kockázata alacsony. Csak így tovább.</string>
     <string name="evaluation2">A szív- és érrendszeri megbetegedés kockázata közepes. Próbálja csökkenteni az életmódjából adódó rizikófaktorokat!</string>
@@ -93,4 +93,9 @@
     <string name="title_question8">Vérnyomás</string>
     <string name="title_question9">Cukorbetegség</string>
     <string name="title_sex_mismatch">Nem megfelelő adat a nemnél</string>
+    <string name="bmi_evaluation4">(elhízott)</string>
+    <string name="bmi_evaluation1">(soványság)</string>
+    <string name="bmi_evaluation3">(túlsúlyú)</string>
+    <string name="bmi_evaluation2">(normál testsúlyú)</string>
+    <string name="share">megosztás</string>
 </resources>

@@ -1,6 +1,10 @@
 package com.example.android.heartcure;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.support.v7.app.ActionBar;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,12 +24,16 @@ public class MainActivity extends AppCompatActivity {
     int bmi; // bmi calculated into scoreThirdQuestion method and used in the final evaluation
     boolean clicked = false; //it becomes true if buttonResults and resetButton are pressed
 
+    ScrollView mainScrollView;
+
     RadioGroup radiogroup1, radiogroup2, radiogroup4, radiogroup5, radiogroup6, radiogroup7,
             radiogroup8, radiogroup9, radiogroup10, radiogroup11, radiogroup12, radiogroup13;
 
     EditText userweight, userheight;
 
     CheckBox userfemale, usermale;
+
+    String bmievaluation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setSubtitle(getString(R.string.appbar_subtitle));
         setContentView(R.layout.activity_main);
 
+        // These lines are necessary to avoid focus stays on the two EditTexts
+        // after they are edited with user datas.
+        mainScrollView = (ScrollView) findViewById(R.id.activity_main);
+        mainScrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        mainScrollView.setFocusable(true);
+        mainScrollView.setFocusableInTouchMode(true);
+        mainScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.requestFocusFromTouch();
+                return false;
+            }
+        });
 
         radiogroup1 = (RadioGroup) findViewById(R.id.radioGroup1);
         radiogroup2 = (RadioGroup) findViewById(R.id.radioGroup2);
@@ -102,14 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 score = score + 6;
         }
     }
-//        if (checkedRadioButtonId == R.id.radioButton1_2) {
-//            switch (score = score + 4) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton1_3) {
-//            switch (score = score + 6) {
-//            }
-//        }
-//    }
 
     // This method calculates score for the second radiogroup
     private void scoreSecondQuestion() {
@@ -126,20 +140,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton2_4:
                 score = score + 10;
         }
-//        if (checkedRadioButtonId == R.id.radioButton2_2) {
-//            switch (score = score + 6) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton2_3) {
-//            switch (score = score + 8) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton2_4) {
-//            switch (score = score + 10) {
-//            }
-//        }
     }
 
 
-    // This method calculates score for the third radiogroup and calculates bmi to show in the final evaluation
+    // This method calculates score for the third radiogroup and calculates
+    // and rates with string bmievaluation bmi to show in the final evaluation
     private void scoreThirdQuestion() {
         CheckBox answer3a = (CheckBox) findViewById(R.id.radioButton3_1);
         CheckBox answer3b = (CheckBox) findViewById(R.id.radioButton3_2);
@@ -162,6 +167,28 @@ public class MainActivity extends AppCompatActivity {
         } else if (answer3b.isChecked() && bmi > 30) {
             score = score + 2;
         }
+
+        // evalution of BMI for women
+        if ((answer3a.isChecked()) && bmi < 19) {
+            bmievaluation = getString(R.string.bmi_evaluation1);
+        } else if ((answer3a.isChecked()) && (bmi >= 19 && bmi <= 24)) {
+            bmievaluation = getString(R.string.bmi_evaluation2);
+        } else if ((answer3a.isChecked()) && (bmi >= 25 && bmi <= 30)) {
+            bmievaluation = getString(R.string.bmi_evaluation3);
+        } else if ((answer3a.isChecked()) && bmi > 30) {
+            bmievaluation = getString(R.string.bmi_evaluation4);
+        }
+
+        // evalution of BMI for men
+        if ((answer3b.isChecked()) && bmi < 20) {
+            bmievaluation = getString(R.string.bmi_evaluation1);
+        } else if ((answer3b.isChecked()) && (bmi >= 20 && bmi <= 25)) {
+            bmievaluation = getString(R.string.bmi_evaluation2);
+        } else if ((answer3b.isChecked()) && (bmi >= 26 && bmi <= 30)) {
+            bmievaluation = getString(R.string.bmi_evaluation3);
+        } else if ((answer3b.isChecked()) && bmi > 30) {
+            bmievaluation = getString(R.string.bmi_evaluation4);
+        }
     }
 
     // This method calculates score for the fourth radiogroup
@@ -175,13 +202,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton4_2:
                 score = score - 2;
         }
-//        if (checkedRadioButtonId == R.id.radioButton4_1) {
-//            switch (score = score - 4) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton4_2) {
-//            switch (score = score - 2) {
-//            }
-//        }
     }
 
     // This method calculates score for the fifth radiogroup
@@ -195,14 +215,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton5_2:
                 score = score + 2;
         }
-
-//        if (checkedRadioButtonId == radioButton5_1) {
-//            switch (score = score + 4) {
-//            }
-//        } else if (checkedRadioButtonId == radioButton5_2) {
-//            switch (score = score + 2) {
-//            }
-//        }
     }
 
     // This method calculates score for the sixth radiogroup
@@ -216,13 +228,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton6_3:
                 score = score + 2;
         }
-//        if (checkedRadioButtonId == radioButton6_1) {
-//            switch (score = score - 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton6_3) {
-//            switch (score = score + 2) {
-//            }
-//        }
     }
 
     // This method calculates score for the seventh radiogroup
@@ -239,16 +244,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton7_3:
                 score = score + 3;
         }
-//        if (checkedRadioButtonId == R.id.radioButton7_1) {
-//            switch (score = score + 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton7_2) {
-//            switch (score = score + 6) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton7_3) {
-//            switch (score = score + 3) {
-//            }
-//        }
     }
 
     // This method calculates score for the eighth radiogroup
@@ -272,22 +267,6 @@ public class MainActivity extends AppCompatActivity {
                 score = score + 4;
 
         }
-//        if (checkedRadioButtonId == R.id.radioButton8_1) {
-//            switch (score = score + 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton8_3) {
-//            switch (score = score + 1) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton8_4) {
-//            switch (score = score + 6) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton8_6) {
-//            switch (score = score + 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton8_7) {
-//            switch (score = score + 4) {
-//            }
-//        }
     }
 
     // This method calculates score for the ninth radiogroup
@@ -307,19 +286,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton9_5:
                 score = score + 8;
         }
-//        if (checkedRadioButtonId == R.id.radioButton9_1) {
-//            switch (score = score + 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton9_3) {
-//            switch (score = score + 6) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton9_4) {
-//            switch (score = score + 8) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton9_5) {
-//            switch (score = score + 8) {
-//            }
-//        }
     }
 
     // This method calculates score for the tenth radiogroup
@@ -333,13 +299,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton10_4:
                 score = score + 4;
         }
-//        if (checkedRadioButtonId == R.id.radioButton10_3) {
-//            switch (score = score + 2) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton10_4) {
-//            switch (score = score + 4) {
-//            }
-//        }
     }
 
     // This method calculates score for the eleventh radiogroup
@@ -356,16 +315,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton11_4:
                 score = score + 4;
         }
-//        if (checkedRadioButtonId == R.id.radioButton11_2) {
-//            switch (score = score + 10) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton11_3) {
-//            switch (score = score + 6) {
-//            }
-//        } else if (checkedRadioButtonId == R.id.radioButton11_4) {
-//            switch (score = score + 4) {
-//            }
-//        }
     }
 
     // This method calculates score for the twelfth radiogroup
@@ -376,10 +325,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton12_1:
                 score = score + 10;
         }
-//        if (checkedRadioButtonId == R.id.radioButton12_1) {
-//            switch (score = score + 10) {
-//            }
-//        }
     }
 
     // This method calculates score for the thirteenth radiogroup
@@ -390,10 +335,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButton13_1:
                 score = score + 10;
         }
-//        if (checkedRadioButtonId == R.id.radioButton13_1) {
-//            switch (score = score + 10) {
-//            }
-//        }
     }
 
     // This method sums the total score
@@ -422,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     // asking user to make only one choice between them.
     // Same thing if user hasn't completed all the test: an AlertDialog shows up an error.
     // If the condition is satisfied, final evaluation is shown with an AlertDialog
-    // with his bmi and a footnote.
+    // with bmi and its evaluation and a footnote.
     public void showResults(View view) {
         if (userfemale.isChecked() && usermale.isChecked()) {
             String message = getString(R.string.sex_mismatch);
@@ -457,23 +398,45 @@ public class MainActivity extends AppCompatActivity {
 
             if (score <= 4) {
                 String message = getString(R.string.evaluation1);
-                message += " " + getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi;
+                message += " " + bmievaluation + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
+                final String newMessage = message;
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
                         .setMessage(message)
                         .setPositiveButton("ok", null)
+                        .setNeutralButton(getString(R.string.share),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent share = new Intent(Intent.ACTION_SEND);
+                                        share.setType("text/plain");
+                                        share.putExtra(Intent.EXTRA_TEXT, newMessage);
+                                        startActivity(Intent.createChooser(share, "Select application to share your result"));
+                                    }
+                                })
                         .show();
             }
 
             if (score >= 5 && score <= 8) {
                 String message = getString(R.string.evaluation2);
-                message += " " + getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi;
+                message += " " + bmievaluation + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
+                final String newMessage = message;
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
                         .setMessage(message)
                         .setPositiveButton("ok", null)
+                        .setNeutralButton(getString(R.string.share),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent share = new Intent(Intent.ACTION_SEND);
+                                        share.setType("text/plain");
+                                        share.putExtra(Intent.EXTRA_TEXT, newMessage);
+                                        startActivity(Intent.createChooser(share, "Select application to share your result"));
+                                    }
+                                })
                         .show();
 
             }
@@ -481,24 +444,46 @@ public class MainActivity extends AppCompatActivity {
             if (score >= 9 && score <= 16) {
 
                 String message = getString(R.string.evaluation3);
-                message += " " + getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi;
+                message += " " + bmievaluation + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
+                final String newMessage = message;
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
                         .setMessage(message)
                         .setPositiveButton("ok", null)
+                        .setNeutralButton(getString(R.string.share),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent share = new Intent(Intent.ACTION_SEND);
+                                        share.setType("text/plain");
+                                        share.putExtra(Intent.EXTRA_TEXT, newMessage);
+                                        startActivity(Intent.createChooser(share, "Select application to share your result"));
+                                    }
+                                })
                         .show();
 
             }
 
             if (score >= 17) {
                 String message = getString(R.string.evaluation4);
-                message += " " + getString(R.string.bmi) + bmi + ".";
+                message += " " + getString(R.string.bmi) + bmi;
+                message += " " + bmievaluation + ".";
                 message += "\n" + "\n" + getString(R.string.foot_note_evaluation);
+                final String newMessage = message;
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.title_evaluation))
                         .setMessage(message)
                         .setPositiveButton("ok", null)
+                        .setNeutralButton(getString(R.string.share),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent share = new Intent(Intent.ACTION_SEND);
+                                        share.setType("text/plain");
+                                        share.putExtra(Intent.EXTRA_TEXT, newMessage);
+                                        startActivity(Intent.createChooser(share, "Select application to share your result"));
+                                    }
+                                })
                         .show();
             }
 
@@ -539,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
         submit.setEnabled(true);
         submit.setTextColor(Color.WHITE);
         clicked = false;
-
+        mainScrollView.fullScroll(View.FOCUS_UP);
     }
 }
 

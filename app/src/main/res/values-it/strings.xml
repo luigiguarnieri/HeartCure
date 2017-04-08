@@ -94,4 +94,9 @@
     <string name="hint_height">Inserisci la tua altezza in centimetri</string>
     <string name="bmi">Il vostro BMI è \u0020</string>
     <string name="reset_button">RIFAI IL TEST</string>
+    <string name="bmi_evaluation1">(sottopeso)</string>
+    <string name="bmi_evaluation2">(normopeso)</string>
+    <string name="bmi_evaluation3">(sovrappeso)</string>
+    <string name="bmi_evaluation4">(obeso)</string>
+    <string name="share">condividi</string>
 </resources>
