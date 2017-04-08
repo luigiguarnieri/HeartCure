@@ -13,9 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import static com.example.android.heartcure.R.id.radioButton3_1;
-import static com.example.android.heartcure.R.id.radioGroup1;
-import static com.example.android.heartcure.R.id.radioGroup2;
 
 public class MainActivity extends AppCompatActivity {
     int score; //total score for the evaluation
@@ -52,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        radiogroup1 = (RadioGroup) findViewById(radioGroup1);
-        radiogroup2 = (RadioGroup) findViewById(radioGroup2);
+        radiogroup1 = (RadioGroup) findViewById(R.id.radioGroup1);
+        radiogroup2 = (RadioGroup) findViewById(R.id.radioGroup2);
         radiogroup4 = (RadioGroup) findViewById(R.id.radioGroup4);
         radiogroup5 = (RadioGroup) findViewById(R.id.radioGroup5);
         radiogroup6 = (RadioGroup) findViewById(R.id.radioGroup6);
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         radiogroup13 = (RadioGroup) findViewById(R.id.radioGroup13);
         userweight = (EditText) findViewById(R.id.weight_data);
         userheight = (EditText) findViewById(R.id.height_data);
-        userfemale = (CheckBox) findViewById(radioButton3_1);
+        userfemale = (CheckBox) findViewById(R.id.radioButton3_1);
         usermale = (CheckBox) findViewById(R.id.radioButton3_2);
 
         Button submit = (Button) findViewById(R.id.buttonResults);
@@ -96,35 +93,55 @@ public class MainActivity extends AppCompatActivity {
     private void scoreFirstQuestion() {
 
         int checkedRadioButtonId = radiogroup1.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton1_2) {
-            switch (score = score + 4) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton1_3) {
-            switch (score = score + 6) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton1_2:
+                score = score + 4;
+                break;
+            case R.id.radioButton1_3:
+                score = score + 6;
         }
     }
+//        if (checkedRadioButtonId == R.id.radioButton1_2) {
+//            switch (score = score + 4) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton1_3) {
+//            switch (score = score + 6) {
+//            }
+//        }
+//    }
 
     // This method calculates score for the second radiogroup
     private void scoreSecondQuestion() {
 
         int checkedRadioButtonId = radiogroup2.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton2_2) {
-            switch (score = score + 6) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton2_3) {
-            switch (score = score + 8) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton2_4) {
-            switch (score = score + 10) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton2_2:
+                score = score + 6;
+                break;
+            case R.id.radioButton2_3:
+                score = score + 8;
+                break;
+            case R.id.radioButton2_4:
+                score = score + 10;
         }
+//        if (checkedRadioButtonId == R.id.radioButton2_2) {
+//            switch (score = score + 6) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton2_3) {
+//            switch (score = score + 8) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton2_4) {
+//            switch (score = score + 10) {
+//            }
+//        }
     }
 
 
     // This method calculates score for the third radiogroup and calculates bmi to show in the final evaluation
     private void scoreThirdQuestion() {
-        CheckBox answer3a = (CheckBox) findViewById(radioButton3_1);
+        CheckBox answer3a = (CheckBox) findViewById(R.id.radioButton3_1);
         CheckBox answer3b = (CheckBox) findViewById(R.id.radioButton3_2);
         EditText userWeight = (EditText) findViewById(R.id.weight_data);
         String weight = userWeight.getText().toString();
@@ -135,154 +152,248 @@ public class MainActivity extends AppCompatActivity {
 
         bmi = ((newWeight * 10000) / (newHeight * newHeight));
 
+
         if ((answer3a.isChecked()) && (bmi >= 25 && bmi <= 30)) {
-            switch (score = score + 1) {
-            }
+            score = score + 1;
         } else if (answer3a.isChecked() && bmi > 30) {
-            switch (score = score + 2) {
-            }
+            score = score + 2;
         } else if (answer3b.isChecked() && (bmi >= 26 && bmi <= 30)) {
-            switch (score = score + 1) {
-            }
+            score = score + 1;
         } else if (answer3b.isChecked() && bmi > 30) {
-            switch (score = score + 2) {
-            }
+            score = score + 2;
         }
     }
 
     // This method calculates score for the fourth radiogroup
     private void scoreFourthQuestion() {
         int checkedRadioButtonId = radiogroup4.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton4_1) {
-            switch (score = score - 4) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton4_2) {
-            switch (score = score - 2) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton4_1:
+                score = score - 4;
+                break;
+            case R.id.radioButton4_2:
+                score = score - 2;
         }
+//        if (checkedRadioButtonId == R.id.radioButton4_1) {
+//            switch (score = score - 4) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton4_2) {
+//            switch (score = score - 2) {
+//            }
+//        }
     }
 
     // This method calculates score for the fifth radiogroup
     private void scoreFifthQuestion() {
         int checkedRadioButtonId = radiogroup5.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton5_1) {
-            switch (score = score + 4) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton5_2) {
-            switch (score = score + 2) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton5_1:
+                score = score + 4;
+                break;
+            case R.id.radioButton5_2:
+                score = score + 2;
         }
+
+//        if (checkedRadioButtonId == radioButton5_1) {
+//            switch (score = score + 4) {
+//            }
+//        } else if (checkedRadioButtonId == radioButton5_2) {
+//            switch (score = score + 2) {
+//            }
+//        }
     }
 
     // This method calculates score for the sixth radiogroup
     private void scoreSixthQuestion() {
         int checkedRadioButtonId = radiogroup6.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton6_1) {
-            switch (score = score - 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton6_3) {
-            switch (score = score + 2) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton6_1:
+                score = score - 2;
+                break;
+            case R.id.radioButton6_3:
+                score = score + 2;
         }
+//        if (checkedRadioButtonId == radioButton6_1) {
+//            switch (score = score - 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton6_3) {
+//            switch (score = score + 2) {
+//            }
+//        }
     }
 
     // This method calculates score for the seventh radiogroup
     private void scoreSeventhQuestion() {
         int checkedRadioButtonId = radiogroup7.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton7_1) {
-            switch (score = score + 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton7_2) {
-            switch (score = score + 6) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton7_3) {
-            switch (score = score + 3) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton7_1:
+                score = score + 2;
+                break;
+            case R.id.radioButton7_2:
+                score = score + 6;
+                break;
+            case R.id.radioButton7_3:
+                score = score + 3;
         }
+//        if (checkedRadioButtonId == R.id.radioButton7_1) {
+//            switch (score = score + 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton7_2) {
+//            switch (score = score + 6) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton7_3) {
+//            switch (score = score + 3) {
+//            }
+//        }
     }
 
     // This method calculates score for the eighth radiogroup
     private void scoreEighthQuestion() {
         int checkedRadioButtonId = radiogroup8.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton8_1) {
-            switch (score = score + 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton8_3) {
-            switch (score = score + 1) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton8_4) {
-            switch (score = score + 6) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton8_6) {
-            switch (score = score + 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton8_7) {
-            switch (score = score + 4) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton8_1:
+                score = score + 2;
+                break;
+            case R.id.radioButton8_3:
+                score = score + 1;
+                break;
+            case R.id.radioButton8_4:
+                score = score + 6;
+                break;
+            case R.id.radioButton8_6:
+                score = score + 2;
+                break;
+            case R.id.radioButton8_7:
+                score = score + 4;
+
         }
+//        if (checkedRadioButtonId == R.id.radioButton8_1) {
+//            switch (score = score + 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton8_3) {
+//            switch (score = score + 1) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton8_4) {
+//            switch (score = score + 6) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton8_6) {
+//            switch (score = score + 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton8_7) {
+//            switch (score = score + 4) {
+//            }
+//        }
     }
 
     // This method calculates score for the ninth radiogroup
     private void scoreNinthQuestion() {
         int checkedRadioButtonId = radiogroup9.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton9_1) {
-            switch (score = score + 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton9_3) {
-            switch (score = score + 6) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton9_4) {
-            switch (score = score + 8) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton9_5) {
-            switch (score = score + 8) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton9_1:
+                score = score + 2;
+                break;
+            case R.id.radioButton9_3:
+                score = score + 6;
+                break;
+            case R.id.radioButton9_4:
+                score = score + 8;
+                break;
+            case R.id.radioButton9_5:
+                score = score + 8;
         }
+//        if (checkedRadioButtonId == R.id.radioButton9_1) {
+//            switch (score = score + 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton9_3) {
+//            switch (score = score + 6) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton9_4) {
+//            switch (score = score + 8) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton9_5) {
+//            switch (score = score + 8) {
+//            }
+//        }
     }
 
     // This method calculates score for the tenth radiogroup
     private void scoreTenthQuestion() {
         int checkedRadioButtonId = radiogroup10.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton10_3) {
-            switch (score = score + 2) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton10_4) {
-            switch (score = score + 4) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton10_3:
+                score = score + 2;
+                break;
+            case R.id.radioButton10_4:
+                score = score + 4;
         }
+//        if (checkedRadioButtonId == R.id.radioButton10_3) {
+//            switch (score = score + 2) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton10_4) {
+//            switch (score = score + 4) {
+//            }
+//        }
     }
 
     // This method calculates score for the eleventh radiogroup
     private void scoreEleventhQuestion() {
         int checkedRadioButtonId = radiogroup11.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton11_2) {
-            switch (score = score + 10) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton11_3) {
-            switch (score = score + 6) {
-            }
-        } else if (checkedRadioButtonId == R.id.radioButton11_4) {
-            switch (score = score + 4) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton11_2:
+                score = score + 10;
+                break;
+            case R.id.radioButton11_3:
+                score = score + 6;
+                break;
+            case R.id.radioButton11_4:
+                score = score + 4;
         }
+//        if (checkedRadioButtonId == R.id.radioButton11_2) {
+//            switch (score = score + 10) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton11_3) {
+//            switch (score = score + 6) {
+//            }
+//        } else if (checkedRadioButtonId == R.id.radioButton11_4) {
+//            switch (score = score + 4) {
+//            }
+//        }
     }
 
     // This method calculates score for the twelfth radiogroup
     private void scoreTwelfthQuestion() {
         int checkedRadioButtonId = radiogroup12.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton12_1) {
-            switch (score = score + 10) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton12_1:
+                score = score + 10;
         }
+//        if (checkedRadioButtonId == R.id.radioButton12_1) {
+//            switch (score = score + 10) {
+//            }
+//        }
     }
 
     // This method calculates score for the thirteenth radiogroup
     private void scoreThirteenthQuestion() {
         int checkedRadioButtonId = radiogroup13.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.radioButton13_1) {
-            switch (score = score + 10) {
-            }
+
+        switch (checkedRadioButtonId) {
+            case R.id.radioButton13_1:
+                score = score + 10;
         }
+//        if (checkedRadioButtonId == R.id.radioButton13_1) {
+//            switch (score = score + 10) {
+//            }
+//        }
     }
 
     // This method sums the total score
